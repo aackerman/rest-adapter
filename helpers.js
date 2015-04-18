@@ -47,6 +47,7 @@ let isPlainObject = (value) => {
 
 export default {
   isPlainObject,
+  isObjectLike,
   isNumber,
   isString,
   isUndefined,

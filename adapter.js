@@ -2,28 +2,39 @@ import {
   isPlainObject,
   isNumber,
   isString,
-  isUndefined
+  isUndefined,
+  isObjectLike
 } from './helpers';
+
+const EmptyFunction = function(){};
+const HTTP_GET = 'GET';
+const HTTP_POST = 'POST';
+const HTTP_PUT = 'PUT';
+const HTTP_DELETE = 'DELETE';
 
 class Adapter {
   constructor(options = {}) {
-    this.namespace  = options.namespace;
-    this.host       = options.host;
-    this.beforeSend = options.beforeSend;
+    this.namespace        = options.namespace;
+    this.host             = options.host;
+    this.beforeSend       = options.beforeSend || EmptyFunction;
+    this.beforeResolution = options.beforeResolution || EmptyFunction;
+    this.beforeRejection  = options.beforeRejection || EmptyFunction;
   }
 
   request(url, type, options) {
     return new Promise((resolve, reject) => {
       var hash = this.requestOptions(url, type, options);
 
-      hash.beforeSend = (options && options.beforeSend) || this.beforeSend;
+      hash.beforeSend = this.beforeSend;
 
       hash.success = (json, textStatus, jqXHR) => {
         json = this.requestSuccess(jqXHR, json);
+        this.beforeResolution(json, textStatus, jqXHR);
         resolve(json);
       };
 
       hash.error = (jqXHR, textStatus, errorThrown) => {
+        this.beforeRejection(jqXHR, textStatus, errorThrown);
         reject(this.requestError(jqXHR, jqXHR.responseText, errorThrown));
       };
 
@@ -79,9 +90,7 @@ class Adapter {
   }
 
   requestError(jqXHR, responseText, errorThrown) {
-    var isObject = jqXHR !== null && typeof jqXHR === 'object';
-
-    if (isObject) {
+    if (isObjectLike(jqXHR)) {
       jqXHR.then = null;
       if (!jqXHR.errorThrown) {
         if (typeof errorThrown === 'string') {
@@ -95,14 +104,15 @@ class Adapter {
     return jqXHR;
   }
 
-  requestOptions(url, type, options) {
-    var hash = options || {};
-    hash.url = url;
-    hash.type = type;
-    hash.dataType = 'json';
-    hash.context = this;
+  requestOptions(url, type, options = {}) {
+    var hash = Object.assign(options, {
+      url: url,
+      type: type,
+      dataType: 'json',
+      context: this
+    });
 
-    if (hash.data && type !== 'GET') {
+    if (hash.data && type !== HTTP_GET) {
       hash.contentType = 'application/json; charset=utf-8';
       hash.data = JSON.stringify(hash.data);
     }
@@ -134,27 +144,27 @@ class Adapter {
   }
 
   findOne(typeKey, id) {
-    return this.request(this.buildURL(typeKey, id), 'GET');
+    return this.request(this.buildURL(typeKey, id), HTTP_GET);
   }
 
   findAll(typeKey) {
-    return this.request(this.buildURL(typeKey), 'GET');
+    return this.request(this.buildURL(typeKey), HTTP_GET);
   }
 
   findQuery(typeKey, query) {
-    return this.request(this.buildURL(typeKey), 'GET', { data: query });
+    return this.request(this.buildURL(typeKey), HTTP_GET, { data: query });
   }
 
   create(typeKey, params) {
-    return this.request(this.buildURL(typeKey), 'POST', { data: params });
+    return this.request(this.buildURL(typeKey), HTTP_POST, { data: params });
   }
 
   update(typeKey, id, params) {
-    return this.request(this.buildURL(typeKey, id), 'PUT', { data: params });
+    return this.request(this.buildURL(typeKey, id), HTTP_PUT, { data: params });
   }
 
   destroy(typeKey, id) {
-    return this.request(this.buildURL(typeKey, id), 'DELETE');
+    return this.request(this.buildURL(typeKey, id), HTTP_DELETE);
   }
 }
 
