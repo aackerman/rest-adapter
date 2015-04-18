@@ -12,7 +12,7 @@ const HTTP_POST = 'POST';
 const HTTP_PUT = 'PUT';
 const HTTP_DELETE = 'DELETE';
 
-class Adapter {
+class RestAdapter {
   constructor(options = {}) {
     this.namespace        = options.namespace;
     this.host             = options.host;
