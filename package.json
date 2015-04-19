@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/aackerman/rest-adapter",
   "devDependencies": {
+    "express": "^4.12.3",
     "jasmine-core": "^2.2.0",
     "karma": "^0.12.31",
     "karma-cli": "0.0.4",
