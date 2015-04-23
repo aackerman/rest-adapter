@@ -12,6 +12,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      '__tests__/spec_helper.js',
       '__tests__/*_test.js'
     ],
 
@@ -24,7 +25,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      '__tests__/*_test.js': ['webpack']
+      '__tests__/*.js': ['webpack']
     },
 
 
@@ -50,10 +51,17 @@ module.exports = function(config) {
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
+    webpack: {
+      module: {
+        loaders: [
+          { test: /\.js/, loader: 'babel-loader' }
+        ]
+      }
+    },
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: [],
+    browsers: ['PhantomJS'],
 
 
     // Continuous Integration mode

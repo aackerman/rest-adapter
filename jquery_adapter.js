@@ -1,3 +1,4 @@
+import jQuery from 'jquery';
 import RestAdapter from './index';
 import {
   isObjectLike

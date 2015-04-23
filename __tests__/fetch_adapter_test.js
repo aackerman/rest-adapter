@@ -7,5 +7,13 @@ describe('FetchAdapter', function(){
     host: TEST_HOST
   });
 
-  describe('findOne')
+  describe('findOne', function(){
+    it('does stuff', (done) => {
+      adapter.find('200').then(() => {
+        done();
+      }, (jqXHR, text, err) => {
+        console.log(jqXHR, text, err);
+      });
+    });
+  });
 });

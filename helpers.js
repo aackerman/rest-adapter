@@ -13,9 +13,9 @@ let hasOwnProperty = Object.prototype.hasOwnProperty;
 
 let objToString = Object.prototype.toString;
 
-let isObjectLike = (value) { return !!value && typeof value == 'object'; };
+let isObjectLike = (value) => { return !!value && typeof value == 'object'; };
 
-let isUndefined = (value) { return typeof result == 'undefined' };
+let isUndefined = (value) => { return typeof result == 'undefined' };
 
 let isNumber = (value) => {
   return typeof value == 'number' || (isObjectLike(value) && objToString.call(value) == '[object Number]')

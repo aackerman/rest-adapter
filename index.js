@@ -1,9 +1,11 @@
+import jQuery from 'jquery';
 import {
   isPlainObject,
   isNumber,
   isString,
   isUndefined,
-  isObjectLike
+  isObjectLike,
+  camelize
 } from './helpers';
 
 const EmptyFunction = function(){};
@@ -168,4 +170,4 @@ class RestAdapter {
   }
 }
 
-export default Adapter;
+export default RestAdapter;
