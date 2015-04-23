@@ -40,6 +40,7 @@ class RestAdapter {
         reject(this.requestError(jqXHR, jqXHR.responseText, errorThrown));
       };
 
+      console.log('request hash', hash);
       jQuery.ajax(hash);
     });
   }

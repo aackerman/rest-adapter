@@ -7,7 +7,7 @@ app.use('*', function(req, res, next) {
 });
 
 app.get('/200', function(req, res) {
-  res.end('');
+  res.end('{}');
 });
 
 app.get('/400', function(req, res) {
