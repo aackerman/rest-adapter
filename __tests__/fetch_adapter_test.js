@@ -6,11 +6,17 @@ describe('FetchAdapter', function(){
   });
 
   describe('find', function(){
-    it('does stuff', (done) => {
-      adapter.find('200').then(() => {
+    it('returns success', (done) => {
+      adapter.find('200').then((res) => {
+        expect(res).toEqual({});
         done();
-      }, (jqXHR, text, err) => {
-        console.log(jqXHR, text, err);
+      });
+    });
+
+    it('returns failure', (done) => {
+      adapter.find('301').then((res) => {
+        expect(res).toEqual({});
+        done();
       });
     });
   });

@@ -11,7 +11,7 @@ app.get('/200', function(req, res) {
 });
 
 app.get('/301', function(req, res) {
-  res.redirect(301, '/200');
+  res.redirect(301, '200');
 });
 
 app.get('/400', function(req, res) {

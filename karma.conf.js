@@ -4,6 +4,7 @@ module.exports = function(config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
+    autoWatchBatchDelay: 400,
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -54,7 +55,7 @@ module.exports = function(config) {
     webpack: {
       module: {
         loaders: [
-          { test: /\.js/, loader: 'babel-loader' }
+          { test: /\.js/, loader: 'babel-loader', exclude: /node_modules/ }
         ]
       }
     },
