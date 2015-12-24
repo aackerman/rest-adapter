@@ -1,3 +1,3 @@
 ## rest-adapter
 
-An rest wrapper for working with jQuery.
+A REST wrapper for working with `jQuery.ajax` or `window.fetch`.

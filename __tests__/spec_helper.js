@@ -1,2 +1,3 @@
-typeof Promise !== 'undefined' || require('es6-promise').polyfill();
+window.Promise = require('bluebird');
 Object.assign = Object.assign || require('object-assign');
+require('whatwg-fetch');

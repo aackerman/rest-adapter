@@ -14,7 +14,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       '__tests__/spec_helper.js',
-      '__tests__/*_test.js'
+      '__tests__/*-test.js'
     ],
 
 
@@ -65,7 +65,7 @@ module.exports = function(config) {
     browsers: ['PhantomJS'],
 
     proxies: {
-      '/test': 'http://localhost:9999',
+      '/': 'http://localhost:9999/',
     },
 
     // Continuous Integration mode

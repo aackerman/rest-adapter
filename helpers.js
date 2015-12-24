@@ -1,35 +1,27 @@
-var STRING_CAMELIZE_REGEXP = (/(\-|_|\.|\s)+(.)?/g);
-
-let camelize = (key) => {
-  return key.replace(STRING_CAMELIZE_REGEXP, function(match, _, chr) {
-    return chr ? chr.toUpperCase() : '';
-  }).replace(/^([A-Z])/, function(match) {
-    return match.toLowerCase();
-  });
-}
-
-// borrow some methods from lodash
 let hasOwnProperty = Object.prototype.hasOwnProperty;
+let toString = Object.prototype.toString;
 
-let objToString = Object.prototype.toString;
+let isObjectLike = (value) => {
+  return !!value && typeof value == 'object';
+};
 
-let isObjectLike = (value) => { return !!value && typeof value == 'object'; };
-
-let isUndefined = (value) => { return typeof result == 'undefined' };
+let isUndefined = (value) => {
+  return typeof result == 'undefined'
+};
 
 let isNumber = (value) => {
-  return typeof value == 'number' || (isObjectLike(value) && objToString.call(value) == '[object Number]')
+  return typeof value == 'number' || (isObjectLike(value) && toString.call(value) == '[object Number]')
 }
 
 let isString = (value) => {
-  return typeof value == 'string' || (isObjectLike(value) && objToString.call(value) == stringTag);
+  return typeof value == 'string' || (isObjectLike(value) && toString.call(value) == '[object String]');
 }
 
 let isPlainObject = (value) => {
   var Ctor;
 
   // Exit early for non `Object` objects.
-  if (!(isObjectLike(value) && objToString.call(value) == '[object Object]') ||
+  if (!(isObjectLike(value) && toString.call(value) == '[object Object]') ||
       (!hasOwnProperty.call(value, 'constructor') &&
         (Ctor = value.constructor, typeof Ctor == 'function' && !(Ctor instanceof Ctor)))) {
     return false;
@@ -50,6 +42,5 @@ export default {
   isObjectLike,
   isNumber,
   isString,
-  isUndefined,
-  camelize
-}
+  isUndefined
+};
